@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2023 at 04:43 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.0
+-- Generation Time: Dec 17, 2023 at 05:22 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,15 @@ CREATE TABLE `barang_keluar` (
   `qty` int(11) NOT NULL,
   `pelanggan` int(11) NOT NULL,
   `tgl_keluar` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `barang_keluar`
+--
+
+INSERT INTO `barang_keluar` (`id_barang_keluar`, `nama_barang`, `kategori`, `qty`, `pelanggan`, `tgl_keluar`) VALUES
+('BT-NOTA-0001', 1, 2, 50, 1, '2023-12-17'),
+('BT-NOTA-0002', 2, 3, 70, 3, '2023-12-17');
 
 -- --------------------------------------------------------
 
@@ -45,16 +53,16 @@ CREATE TABLE `barang_keluar` (
 CREATE TABLE `kategori` (
   `id_kategori` int(11) NOT NULL,
   `nama_kategori` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `kategori`
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
-(1, 'Barang A'),
-(2, 'Barang B'),
-(3, 'Barang C');
+(2, 'Barang A'),
+(3, 'Barang B'),
+(5, 'Barang C');
 
 -- --------------------------------------------------------
 
@@ -64,17 +72,17 @@ INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
 
 CREATE TABLE `nama_barang` (
   `id_nama_barang` int(11) NOT NULL,
-  `nama_barang` varchar(30) NOT NULL,
-  `kategori` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `nama_barang` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `nama_barang`
 --
 
-INSERT INTO `nama_barang` (`id_nama_barang`, `nama_barang`, `kategori`) VALUES
-(1, 'Baja', 1),
-(2, 'Gafalum', 2);
+INSERT INTO `nama_barang` (`id_nama_barang`, `nama_barang`) VALUES
+(1, 'Barang 1'),
+(2, 'Barang 2'),
+(3, 'Barang 3');
 
 -- --------------------------------------------------------
 
@@ -87,14 +95,15 @@ CREATE TABLE `pelanggan` (
   `nama_pelanggan` varchar(100) NOT NULL,
   `no_tlp` varchar(14) NOT NULL,
   `alamat_pelanggan` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `no_tlp`, `alamat_pelanggan`) VALUES
-(3, 'Opet Pet 2', '085776665552', 'Desa Sukolilo RT 01 RW 01 Kecamatan Sukilolo Kabupaten Pati');
+(1, 'Yanto', '087778887772', 'Desa Sukolilo RT 05 RW 05 Kec. Sukolilo Kab. Pati'),
+(3, 'Udin', '085776665552', 'Desa Sukolilo RT 03 RW 01 Kec. Sukolilo Kab. Pati');
 
 -- --------------------------------------------------------
 
@@ -111,7 +120,15 @@ CREATE TABLE `pengiriman` (
   `supir` varchar(100) NOT NULL,
   `no_kendaraan` varchar(100) NOT NULL,
   `tgl_pengiriman` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pengiriman`
+--
+
+INSERT INTO `pengiriman` (`id_pengiriman`, `nota_keluar`, `pelanggan`, `nama_barang`, `qty`, `supir`, `no_kendaraan`, `tgl_pengiriman`) VALUES
+(1, 'BT-NOTA-0001', 1, 1, 50, 'Suparman', 'K 1010 MA', '2023-12-17'),
+(2, 'BT-NOTA-0002', 3, 2, 70, 'Suparman 2', 'K 1010 MA', '2023-12-21');
 
 -- --------------------------------------------------------
 
@@ -125,14 +142,15 @@ CREATE TABLE `stok_barang` (
   `nama_barang` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
   `tgl_masuk` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `stok_barang`
 --
 
 INSERT INTO `stok_barang` (`id_stok_barang`, `kategori`, `nama_barang`, `qty`, `tgl_masuk`) VALUES
-(1, 1, 1, 600, '2023-12-21');
+(1, 2, 1, 250, '2023-12-23'),
+(2, 3, 2, 430, '2023-12-18');
 
 -- --------------------------------------------------------
 
@@ -145,7 +163,7 @@ CREATE TABLE `user` (
   `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `level` enum('admin','pemilik') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
@@ -178,8 +196,7 @@ ALTER TABLE `kategori`
 -- Indexes for table `nama_barang`
 --
 ALTER TABLE `nama_barang`
-  ADD PRIMARY KEY (`id_nama_barang`),
-  ADD KEY `kategori` (`kategori`);
+  ADD PRIMARY KEY (`id_nama_barang`);
 
 --
 -- Indexes for table `pelanggan`
@@ -218,13 +235,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `nama_barang`
 --
 ALTER TABLE `nama_barang`
-  MODIFY `id_nama_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_nama_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`
@@ -236,13 +253,13 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT for table `pengiriman`
 --
 ALTER TABLE `pengiriman`
-  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `stok_barang`
 --
 ALTER TABLE `stok_barang`
-  MODIFY `id_stok_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_stok_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -263,15 +280,10 @@ ALTER TABLE `barang_keluar`
   ADD CONSTRAINT `barang_keluar_ibfk_3` FOREIGN KEY (`kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `nama_barang`
---
-ALTER TABLE `nama_barang`
-  ADD CONSTRAINT `nama_barang_ibfk_1` FOREIGN KEY (`kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `pengiriman`
 --
 ALTER TABLE `pengiriman`
+  ADD CONSTRAINT `pengiriman_ibfk_1` FOREIGN KEY (`pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pengiriman_ibfk_2` FOREIGN KEY (`nota_keluar`) REFERENCES `barang_keluar` (`id_barang_keluar`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pengiriman_ibfk_3` FOREIGN KEY (`nama_barang`) REFERENCES `nama_barang` (`id_nama_barang`);
 
