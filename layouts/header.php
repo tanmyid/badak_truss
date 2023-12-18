@@ -73,12 +73,12 @@ if (isset($_SESSION['login']) == 'true') {
                     <ul class="nav navbar-nav">
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?= $baseurl; ?>/assets/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <img src="<?= $baseurl; ?>/assets/img/avatar2.png" class="user-image" alt="User Image">
                                 <span class="hidden-xs"><?= ucwords($_SESSION['username']); ?></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="user-header">
-                                    <img src="<?= $baseurl; ?>/assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <img src="<?= $baseurl; ?>/assets/img/avatar2.png" class="img-circle" alt="User Image">
                                     <p>
                                         <?= ucwords($_SESSION['username']); ?> - <?= ucwords($_SESSION['level']); ?>
                                     </p>

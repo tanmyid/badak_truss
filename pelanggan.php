@@ -41,7 +41,16 @@ include 'layouts/sidebar.php';
                                     </div>
                                     <div class="form-group">
                                         <label>Alamat</label>
-                                        <textarea name="alamat_pelanggan" cols="10" rows="5" class="form-control" placeholder="Masukkan Alamat ..."></textarea>
+                                        <label>RT</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan RT ..." name="al_rt">
+                                        <label>RW</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan RW ..." name="al_rw">
+                                        <label>Desa</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan Desa ..." name="al_desa">
+                                        <label>Kecamatan</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan Kec ..." name="al_kec">
+                                        <label>Kabupaten</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan Kab ..." name="al_kab">
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -102,7 +111,7 @@ include 'layouts/sidebar.php';
                                                     </div>
                                                     <div class="form-group">
                                                         <label>No Telp</label>
-                                                        <input type="number" class="form-control" name="no_tlp" value="<?= $no_tlp; ?>">
+                                                        <input type="text" class="form-control" name="no_tlp" value="<?= $no_tlp; ?>">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Alamat</label>
