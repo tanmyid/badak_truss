@@ -66,8 +66,8 @@ include 'layouts/sidebar.php';
                                     <td class="text-center"><?= $no++; ?></td>
                                     <td class="text-center"><?= $nama_kategori; ?></td>
                                     <td class="text-center">
-                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editKategori<?= $id_kategori; ?>"> <i class="fa fa-edit"></i>Edit</button>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#hapusKategori<?= $id_kategori; ?>"><i class="fa fa-trash"></i>Hapus</button>
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editKategori<?= $id_kategori; ?>"> <i class="fa fa-edit"></i> Edit</button>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#hapusKategori<?= $id_kategori; ?>"><i class="fa fa-trash"></i> Hapus</button>
                                     </td>
                                 </tr>
                                 <!-- Modal Edit Kategori -->

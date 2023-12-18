@@ -38,30 +38,24 @@ include 'layouts/sidebar.php';
                             <form action="" method="post">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label>Kategori</label>
-                                        <select name="nama_kategori" class="form-control">
-                                            <option selected>Pilih...</option>
-                                            <?php
-                                            while ($data = mysqli_fetch_array($get_kategori)) :
-                                                $id_kategori = $data['id_kategori'];
-                                                $nama_kategori = $data['nama_kategori'];
-                                            ?>
-                                                <option value="<?= $id_kategori; ?>"><?= $nama_kategori; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
                                         <label>Nama Barang</label>
-                                        <select name="nama_barang" class="form-control">
+                                        <select name="nama_barang" class="form-control" id="SelectKategori" onclick="getSelectedOption2()">
                                             <option selected>Pilih...</option>
                                             <?php
                                             while ($data = mysqli_fetch_array($get_nama_barang)) :
                                                 $id_nama_barang = $data['id_nama_barang'];
                                                 $nama_barang = $data['nama_barang'];
+                                                $id_kategori = $data['id_kategori'];
+                                                $kategori = $data['nama_kategori'];
                                             ?>
-                                                <option value="<?= $id_nama_barang; ?>"><?= $nama_barang; ?></option>
+                                                <option value="<?= $id_nama_barang; ?>" data-id_kategori="<?= $id_kategori; ?>" data-kategori="<?= $kategori; ?>"><?= $nama_barang; ?></option>
                                             <?php endwhile; ?>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Kategori</label>
+                                        <input type="hidden" class="form-control" id="selected_id_kategori" name="id_kategori" readonly>
+                                        <input type="text" class="form-control" id="selected_kategori" name="kategori" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label>Jumlah</label>
@@ -145,8 +139,8 @@ include 'layouts/sidebar.php';
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Kategori</th>
                                 <th class="text-center">Nama Barang</th>
+                                <th class="text-center">Kategori</th>
                                 <th class="text-center">Tanggal Masuk</th>
                                 <th class="text-center">Jumlah</th>
                                 <th class="text-center">Opsi</th>
@@ -169,8 +163,8 @@ include 'layouts/sidebar.php';
                             ?>
                                 <tr>
                                     <td class="text-center"><?= $no++; ?></td>
-                                    <td class="text-center"><?= $nama_kategori; ?></td>
                                     <td class="text-center"><?= $nama_barang; ?></td>
+                                    <td class="text-center"><?= $nama_kategori; ?></td>
                                     <td class="text-center"><?= $tgl_masuk; ?></td>
                                     <td class="text-center"><?= $qty; ?></td>
                                     <td class="text-center">
@@ -225,6 +219,22 @@ include 'layouts/sidebar.php';
 
         // Set nilai input sesuai dengan variabel
         selectedIdNamsetInput.value = idNamset;
+    }
+</script>
+<script type="text/javascript">
+    function getSelectedOption2() {
+        var select = document.getElementById("SelectKategori");
+
+        var selectedIdKategori = document.getElementById("selected_id_kategori");
+        var selectedKategori = document.getElementById("selected_kategori");
+
+        var selectedOption = select.options[select.selectedIndex];
+        var idKategori = selectedOption.getAttribute("data-id_kategori");
+        var namaKategori = selectedOption.getAttribute("data-kategori");
+
+        // Set nilai input sesuai dengan variabel
+        selectedIdKategori.value = idKategori;
+        selectedKategori.value = namaKategori;
     }
 </script>
 <?php

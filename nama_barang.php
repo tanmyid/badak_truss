@@ -20,7 +20,7 @@ include 'layouts/sidebar.php';
             </div>
             <div class="box-body">
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambahNamaBarang"><i class="fa fa-plus"></i> Tambah</button>
-                <!-- Modal Tambah Kategori -->
+                <!-- Modal Tambah Nama Barang -->
                 <div class="modal fade" id="tambahNamaBarang">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -35,6 +35,19 @@ include 'layouts/sidebar.php';
                                         <label>Nama Barang</label>
                                         <input type="text" class="form-control" placeholder="Masukkan Nama ..." name="nama_barang">
                                     </div>
+                                    <div class="form-group">
+                                        <label>Kategori</label>
+                                        <select name="nama_kategori" class="form-control">
+                                            <option selected>Pilih...</option>
+                                            <?php
+                                            while ($data = mysqli_fetch_array($get_kategori)) :
+                                                $id_kategori = $data['id_kategori'];
+                                                $nama_kategori = $data['nama_kategori'];
+                                            ?>
+                                                <option value="<?= $id_kategori; ?>"><?= $nama_kategori; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -45,13 +58,14 @@ include 'layouts/sidebar.php';
                         </div>
                     </div>
                 </div>
-                <!-- ./Modal Tambah Kategori -->
+                <!-- ./Modal Tambah Nama Barang -->
                 <div class="box-body">
                     <table id="tabel" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nama Barang</th>
+                                <th class="text-center">Kategori</th>
                                 <th class="text-center">Opsi</th>
                             </tr>
                         </thead>
@@ -61,16 +75,18 @@ include 'layouts/sidebar.php';
                             while ($data = mysqli_fetch_array($get_nama_barang)) :
                                 $id_nama_barang = $data['id_nama_barang'];
                                 $nama_barang = $data['nama_barang'];
+                                $kategori = $data['nama_kategori'];
                             ?>
                                 <tr>
                                     <td class="text-center"><?= $no++; ?></td>
                                     <td class="text-center"><?= $nama_barang; ?></td>
+                                    <td class="text-center"><?= $kategori; ?></td>
                                     <td class="text-center">
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editNamaBarang<?= $id_nama_barang; ?>"> <i class="fa fa-edit"></i> Edit</button>
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#hapusNamaBarang<?= $id_nama_barang; ?>"><i class="fa fa-trash"></i> Hapus</button>
                                     </td>
                                 </tr>
-                                <!-- Modal Edit Kategori -->
+                                <!-- Modal Edit Nama Barang -->
                                 <div class="modal fade" id="editNamaBarang<?= $id_nama_barang; ?>">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -86,6 +102,20 @@ include 'layouts/sidebar.php';
                                                         <label>Nama Barang</label>
                                                         <input type="text" class="form-control" placeholder="" name="nama_barang" value="<?= $nama_barang; ?>">
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label>Kategori</label>
+                                                        <select name="nama_kategori" class="form-control">
+                                                            <option selected>Pilih...</option>
+                                                            <?php
+                                                            mysqli_data_seek($get_kategori, 0);
+                                                            while ($data = mysqli_fetch_array($get_kategori)) :
+                                                                $id_kategori = $data['id_kategori'];
+                                                                $nama_kategori = $data['nama_kategori'];
+                                                            ?>
+                                                                <option value="<?= $id_kategori; ?>"><?= $nama_kategori; ?></option>
+                                                            <?php endwhile; ?>
+                                                        </select>
+                                                    </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -96,8 +126,8 @@ include 'layouts/sidebar.php';
                                         </div>
                                     </div>
                                 </div>
-                                <!-- ./Modal Edit Kategori -->
-                                <!-- Modal Hapus Kategori -->
+                                <!-- ./Modal Edit Nama Barang -->
+                                <!-- Modal Hapus Nama Barang -->
                                 <div class="modal fade" id="hapusNamaBarang<?= $id_nama_barang; ?>">
                                     <div class="modal-dialog modal-danger">
                                         <div class="modal-content">
@@ -122,7 +152,7 @@ include 'layouts/sidebar.php';
                                         </div>
                                     </div>
                                 </div>
-                                <!-- ./Modal Hapus Kategori -->
+                                <!-- ./Modal Hapus Nama Barang -->
                             <?php
                             endwhile;
                             ?>

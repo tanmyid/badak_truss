@@ -162,12 +162,14 @@ if (isset($_POST['hapusKategori'])) {
 
 // function nama barang
 /// get data
-$get_nama_barang = mysqli_query($koneksi, "SELECT * FROM nama_barang");
+$get_nama_barang = mysqli_query($koneksi, "SELECT * FROM nama_barang
+                                JOIN kategori ON nama_barang.kategori = kategori.id_kategori");
 /// tambah data nama barang
 if (isset($_POST['addNamaBarang'])) {
     $nama_barang = $_POST['nama_barang'];
+    $nama_kategori = $_POST['nama_kategori'];
 
-    $sql_query = mysqli_query($koneksi, "INSERT INTO nama_barang (id_nama_barang, nama_barang) VALUES ('', '$nama_barang')");
+    $sql_query = mysqli_query($koneksi, "INSERT INTO nama_barang (id_nama_barang, nama_barang, kategori) VALUES ('', '$nama_barang', '$nama_kategori')");
 
     echo '<script>';
     if ($sql_query == TRUE) {
@@ -181,8 +183,9 @@ if (isset($_POST['addNamaBarang'])) {
 if (isset($_POST['editNamaBarang'])) {
     $id_nama_barang = $_POST['id_nama_barang'];
     $nama_barang = $_POST['nama_barang'];
+    $nama_kategori = $_POST['nama_kategori'];
 
-    $sql_query = mysqli_query($koneksi, "UPDATE nama_barang SET nama_barang='$nama_barang' WHERE id_nama_barang='$id_nama_barang'");
+    $sql_query = mysqli_query($koneksi, "UPDATE nama_barang SET nama_barang='$nama_barang', kategori='$nama_kategori' WHERE id_nama_barang='$id_nama_barang'");
 
     echo '<script>';
     if ($sql_query == TRUE) {
@@ -215,13 +218,13 @@ $get_stok_barang = mysqli_query($koneksi, "SELECT stok_barang.id_stok_barang, ka
                                         INNER JOIN nama_barang ON stok_barang.nama_barang = nama_barang.id_nama_barang");
 /// tambah data barang masuk
 if (isset($_POST['addBarangIn'])) {
-    $nama_kategori = $_POST['nama_kategori'];
+    $id_kategori = $_POST['id_kategori'];
     $nama_barang = $_POST['nama_barang'];
     $tgl_masuk = $_POST['tgl_masuk'];
     $qty = $_POST['qty'];
 
     $sql_query = mysqli_query($koneksi, "INSERT INTO stok_barang (id_stok_barang, kategori, nama_barang, qty, tgl_masuk) 
-                 VALUES ('','$nama_kategori', '$nama_barang','$qty','$tgl_masuk')");
+                 VALUES ('','$id_kategori', '$nama_barang', '$qty', '$tgl_masuk')");
 
     echo '<script>';
     if ($sql_query == TRUE) {
@@ -245,9 +248,9 @@ if (isset($_POST['updateStok'])) {
 
     echo '<script>';
     if ($sql_query == TRUE) {
-        echo ' alert("Data berhasil di tambah");window.location = "' . $baseurl . '/stok_barang.php";';
+        echo ' alert("Stock berhasil di update");window.location = "' . $baseurl . '/stok_barang.php";';
     } else {
-        echo 'alert("Data gagal di tambah");window.location = "' . $baseurl . '/stok_barang.php";';
+        echo 'alert("Stock gagal di update");window.location = "' . $baseurl . '/stok_barang.php";';
     }
     echo '</script>';
 }
@@ -273,7 +276,8 @@ $get_pelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
 if (isset($_POST['addPelanggan'])) {
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_tlp = $_POST['no_tlp'];
-    $alamat_pelanggan = $_POST['alamat_pelanggan'];
+    $alamat_pelanggan = "Desa " . $_POST['al_desa'] . " RT " . $_POST['al_rt'] . " RW " . $_POST['al_rw'] . " Kecamatan " . $_POST['al_kec'] . " Kabupaten " . $_POST['al_kab'];
+    // $alamat_pelanggan = $_POST['alamat_pelanggan'];
 
     $sql_query = mysqli_query($koneksi, "INSERT INTO pelanggan (id_pelanggan, nama_pelanggan, no_tlp, alamat_pelanggan) VALUES ('', '$nama_pelanggan','$no_tlp','$alamat_pelanggan')");
 
@@ -290,13 +294,12 @@ if (isset($_POST['editPelanggan'])) {
     $id_pelanggan = $_POST['id_pelanggan'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_tlp = $_POST['no_tlp'];
-    $alamat_pelanggan = $_POST['alamat_pelanggan'];
+    $alamat_pelanggan = "Desa " . $_POST['al_desa'] . " RT " . $_POST['al_rt'] . " RW " . $_POST['al_rw'] . " Kecamatan " . $_POST['al_kec'] . " Kabupaten " . $_POST['al_kab'];
 
-
-    if ($_POST['alamat_pelanggan'] !== '') {
+    if ($_POST['al_desa'] !== '') {
         $sql_query = mysqli_query($koneksi, "UPDATE pelanggan SET nama_pelanggan='$nama_pelanggan', no_tlp='$no_tlp', alamat_pelanggan='$alamat_pelanggan' WHERE id_pelanggan='$id_pelanggan'");
         echo '<script> alert("Edit Data Berhasil");window.location = "' . $baseurl . '/pelanggan.php";</script>';
-    } elseif ($_POST['alamat_pelanggan'] == '') {
+    } elseif ($_POST['al_desa'] == '') {
         $sql_query = mysqli_query($koneksi, "UPDATE pelanggan SET nama_pelanggan='$nama_pelanggan', no_tlp='$no_tlp' WHERE id_pelanggan='$id_pelanggan'");
         echo '<script> alert("Edit Data Berhasil");window.location = "' . $baseurl . '/pelanggan.php";</script>';
     } else {
